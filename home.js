@@ -6,7 +6,7 @@ async function verificarSessao() {
     const { data: { user }, error } = await supabaseClient.auth.getUser();
 
     if (!user || error) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -24,7 +24,7 @@ async function fazerLogout() {
         return;
     }
 
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 }
 
 verificarSessao();

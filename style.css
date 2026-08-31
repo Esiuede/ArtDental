@@ -46,7 +46,7 @@ button { cursor: pointer; }
 .login-brand { position: relative; overflow: hidden; display: flex; align-items: center; padding: 64px clamp(40px, 7vw, 110px); background: linear-gradient(145deg, #0f3f8f 0%, #2563eb 55%, #60a5fa 100%); color: #fff; }
 .brand-content { position: relative; z-index: 2; max-width: 600px; }
 .brand-logo img, .mobile-logo img { width: 150px; max-height: 80px; object-fit: contain; }
-.brand-logo-light { background: rgba(255,255,255,.95); display: inline-flex; padding: 8px 14px; border-radius: 14px; margin-bottom: 42px; }
+/*.brand-logo-light { background: rgba(255,255,255,.95); display: inline-flex; padding: 8px 14px; border-radius: 14px; margin-bottom: 42px;*/ }
 .brand-eyebrow, .section-label { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
 .brand-eyebrow { color: #dbeafe; margin-bottom: 14px; }
 .brand-content h1 { font-size: clamp(38px, 4.5vw, 62px); line-height: 1.04; letter-spacing: -.04em; max-width: 620px; }

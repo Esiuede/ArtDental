@@ -37,13 +37,40 @@
 .status-waiting { background: #fffbeb; color: #b45309; }
 .status-finished { background: #f1f5f9; color: #475569; }
 .status-cancelled { background: #fef2f2; color: #b91c1c; }
+
+.row-actions { display: flex; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+.table-action-button { border: 1px solid var(--border); background: #fff; color: #334155; border-radius: 8px; padding: 7px 9px; font-size: 11px; font-weight: 700; }
+.table-action-button:hover { border-color: #bfdbfe; background: #f8fbff; color: var(--primary); }
 .table-action-button.warning { color: #b45309; }
+.table-action-button.danger { color: var(--danger); }
+.table-action-button.danger:hover { border-color: #fecaca; background: #fef2f2; }
+.loading-cell { text-align: center; color: var(--muted); padding: 38px !important; }
+.error-text { color: var(--danger); }
+.compact-empty-state { padding: 34px 20px; }
 
 .week-navigation { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .week-navigation .btn { padding: 9px 12px; }
 .appointment-form-section { scroll-margin-top: 92px; }
+#cancelAppointmentEdit[hidden] { display: none; }
+
+.confirm-dialog { width: min(92vw, 440px); border: 0; border-radius: 16px; padding: 0; box-shadow: 0 24px 70px rgba(15, 23, 42, .22); }
+.confirm-dialog::backdrop { background: rgba(15, 23, 42, .55); backdrop-filter: blur(3px); }
+.confirm-dialog-content { padding: 24px; }
+.confirm-dialog-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 13px; background: #fef2f2; color: var(--danger); font-size: 20px; font-weight: 800; margin-bottom: 16px; }
+.confirm-dialog-content h3 { font-size: 18px; margin-bottom: 8px; }
+.confirm-dialog-content p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+.confirm-dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #b91c1c; }
+.btn:disabled, .table-action-button:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 
 @media (max-width: 900px) {
     .calendar-head, .calendar-grid { min-width: 820px; grid-template-columns: 72px repeat(5, minmax(145px, 1fr)); }
     .time-cell, .day-cell { min-height: 82px; }
+}
+
+@media (max-width: 760px) {
+    .row-actions { justify-content: flex-start; }
+    .confirm-dialog-actions { flex-direction: column-reverse; }
+    .confirm-dialog-actions .btn { width: 100%; }
 }

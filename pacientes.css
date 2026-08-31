@@ -1,0 +1,142 @@
+.patient-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.table-subtext {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.row-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.table-action-button {
+    border: 1px solid var(--border);
+    background: #fff;
+    color: #334155;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.table-action-button:hover {
+    border-color: #bfdbfe;
+    background: #f8fbff;
+    color: var(--primary);
+}
+
+.table-action-button.danger {
+    color: var(--danger);
+}
+
+.table-action-button.danger:hover {
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.loading-cell {
+    text-align: center;
+    color: var(--muted);
+    padding: 38px !important;
+}
+
+.error-text {
+    color: var(--danger);
+}
+
+.compact-empty-state {
+    padding: 34px 20px;
+}
+
+#cancelEditButton[hidden] {
+    display: none;
+}
+
+.patient-dialog {
+    width: min(92vw, 440px);
+    border: 0;
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .22);
+}
+
+.patient-dialog::backdrop {
+    background: rgba(15, 23, 42, .55);
+    backdrop-filter: blur(3px);
+}
+
+.dialog-content {
+    padding: 24px;
+}
+
+.dialog-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: #fef2f2;
+    color: var(--danger);
+    font-size: 20px;
+    margin-bottom: 16px;
+}
+
+.dialog-content h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.dialog-content p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.btn:disabled,
+.table-action-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 760px) {
+    .row-actions {
+        justify-content: flex-start;
+    }
+
+    .dialog-actions {
+        flex-direction: column-reverse;
+    }
+
+    .dialog-actions .btn {
+        width: 100%;
+    }
+}

@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pacientes.css">
 </head>
 <body>
 <div class="app-shell">
@@ -29,37 +30,89 @@
         <header class="topbar"><div class="topbar-title">Pacientes</div></header>
         <main class="page-content">
             <section class="page-header">
-                <div><h1>Pacientes</h1><p>Cadastre, localize e consulte informações dos seus pacientes.</p></div>
+                <div><h1>Pacientes</h1><p>Cadastre, localize e atualize as informações dos seus pacientes.</p></div>
             </section>
 
             <section class="form-section">
-                <div class="form-section-header"><h2>Novo paciente</h2><p>Preencha os dados principais para criar um novo cadastro.</p></div>
+                <div class="form-section-header">
+                    <h2 id="patientFormTitle">Novo paciente</h2>
+                    <p id="patientFormDescription">Preencha os dados principais para criar um novo cadastro.</p>
+                </div>
                 <div class="form-section-body">
-                    <form id="patientForm">
+                    <div id="patientMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                    <form id="patientForm" novalidate>
                         <div class="form-grid">
-                            <div class="form-group full"><label for="nome">Nome completo</label><input id="nome" name="nome" type="text" placeholder="Nome do paciente" required></div>
-                            <div class="form-group"><label for="cpf">CPF</label><input id="cpf" name="cpf" type="text" placeholder="000.000.000-00"></div>
-                            <div class="form-group"><label for="nascimento">Data de nascimento</label><input id="nascimento" name="nascimento" type="date"></div>
-                            <div class="form-group"><label for="telefone">Telefone</label><input id="telefone" name="telefone" type="tel" placeholder="(81) 99999-9999" required></div>
-                            <div class="form-group"><label for="emailPaciente">E-mail</label><input id="emailPaciente" name="email" type="email" placeholder="paciente@email.com"></div>
-                            <div class="form-group full"><label for="endereco">Endereço</label><input id="endereco" name="endereco" type="text" placeholder="Rua, número, bairro e cidade"></div>
+                            <div class="form-group full">
+                                <label for="nome">Nome completo *</label>
+                                <input id="nome" name="nome" type="text" placeholder="Nome do paciente" autocomplete="name" minlength="2" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpf">CPF</label>
+                                <input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nascimento">Data de nascimento</label>
+                                <input id="nascimento" name="nascimento" type="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefone">Telefone *</label>
+                                <input id="telefone" name="telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999" autocomplete="tel" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailPaciente">E-mail</label>
+                                <input id="emailPaciente" name="email" type="email" placeholder="paciente@email.com" autocomplete="email">
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="endereco">Endereço</label>
+                                <input id="endereco" name="endereco" type="text" placeholder="Rua, número, bairro e cidade" autocomplete="street-address">
+                            </div>
                         </div>
-                        <div class="form-actions"><button type="reset" class="btn btn-secondary">Limpar</button><button type="submit" class="btn btn-primary">Salvar paciente</button></div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancelEditButton" class="btn btn-secondary" hidden>Cancelar edição</button>
+                            <button type="reset" class="btn btn-secondary" onclick="setTimeout(() => { if (typeof resetFormMode === 'function') resetFormMode(); }, 0)">Limpar</button>
+                            <button type="submit" class="btn btn-primary" id="patientSubmitButton">
+                                <span class="button-text">Salvar paciente</span>
+                                <span class="button-loading">Salvando...</span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </section>
 
             <section class="panel">
-                <div class="panel-header"><div><h2>Pacientes cadastrados</h2><p>Lista demonstrativa do fluxo visual</p></div></div>
+                <div class="panel-header">
+                    <div><h2>Pacientes cadastrados</h2><p>Dados armazenados no Supabase</p></div>
+                    <span class="patient-meta" id="patientCount">0 pacientes</span>
+                </div>
                 <div class="panel-body">
-                    <div class="toolbar"><div class="search-box"><span>⌕</span><input id="patientSearch" class="search-input" type="search" placeholder="Buscar por nome, CPF ou telefone"></div></div>
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span>⌕</span>
+                            <input id="patientSearch" class="search-input" type="search" placeholder="Buscar por nome, CPF, telefone, e-mail ou endereço">
+                        </div>
+                    </div>
+
                     <div class="table-wrap">
                         <table class="data-table">
-                            <thead><tr><th>Paciente</th><th>Telefone</th><th>E-mail</th><th>Última consulta</th><th></th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>CPF</th>
+                                    <th>Telefone</th>
+                                    <th>E-mail</th>
+                                    <th>Endereço</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
                             <tbody id="patientTableBody">
-                                <tr><td><span class="table-name">Ana Souza</span></td><td>(81) 99999-1111</td><td class="text-muted">ana@email.com</td><td>20/08/2026</td><td><button class="action-menu" aria-label="Opções">⋮</button></td></tr>
-                                <tr><td><span class="table-name">João Silva</span></td><td>(81) 98888-2222</td><td class="text-muted">joao@email.com</td><td>18/08/2026</td><td><button class="action-menu" aria-label="Opções">⋮</button></td></tr>
-                                <tr><td><span class="table-name">Carla Mendes</span></td><td>(81) 97777-3333</td><td class="text-muted">carla@email.com</td><td>10/08/2026</td><td><button class="action-menu" aria-label="Opções">⋮</button></td></tr>
+                                <tr><td colspan="6" class="loading-cell">Carregando pacientes...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -68,21 +121,21 @@
         </main>
     </div>
 </div>
+
+<dialog class="patient-dialog" id="deleteDialog">
+    <div class="dialog-content">
+        <div class="dialog-icon">!</div>
+        <h3>Excluir paciente?</h3>
+        <p>Você está prestes a excluir <strong id="deletePatientName"></strong>. Esta ação removerá o cadastro do banco de dados.</p>
+        <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary" id="cancelDeleteButton">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir paciente</button>
+        </div>
+    </div>
+</dialog>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="home.js"></script>
-<script>
-const patientForm = document.getElementById('patientForm');
-const patientSearch = document.getElementById('patientSearch');
-patientForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    alert('Tela pronta para conectar à tabela de pacientes no Supabase.');
-});
-patientSearch.addEventListener('input', () => {
-    const term = patientSearch.value.toLowerCase();
-    document.querySelectorAll('#patientTableBody tr').forEach(row => {
-        row.style.display = row.innerText.toLowerCase().includes(term) ? '' : 'none';
-    });
-});
-</script>
+<script src="pacientes.js"></script>
 </body>
 </html>

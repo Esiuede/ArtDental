@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Art Dental</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-layout">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="user-icon">&#128100;</div>
+            <ul>
+                <li><a href="cadastros.html">Cadastros</a></li>
+                <li><a href="#">Consultas</a></li>
+                <li>
+                    <a href="#" onclick="fazerLogout()" style="background-color: #ff4d4d; color: white; margin-top: 20px; text-align: center;">Sair</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="content">
+            <h1>Painel Art Dental</h1>
+            <p>Seja bem-vindo ao sistema de gestão odontológica.</p>
+        </main>
+    </div>
+
+    <!-- SDK Oficial do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Script de Validação de Sessão e Logout -->
+    <script src="home.js"></script>
+</body>
+</html>

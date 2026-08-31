@@ -17,6 +17,11 @@ create table if not exists public.pacientes (
     constraint pacientes_telefone_valido check (telefone ~ '^[0-9]{10,11}$')
 );
 
+-- Permissões da API: usuário não autenticado não acessa os dados.
+revoke all on table public.pacientes from anon;
+grant select, insert, update, delete on table public.pacientes to authenticated;
+grant usage, select on sequence public.pacientes_id_seq to authenticated;
+
 -- Mantém atualizado_em automaticamente ao editar um paciente.
 create or replace function public.atualizar_timestamp_paciente()
 returns trigger
@@ -36,7 +41,7 @@ before update on public.pacientes
 for each row
 execute function public.atualizar_timestamp_paciente();
 
--- Segurança: somente usuários autenticados no Supabase podem acessar os pacientes.
+-- Segurança por linha: somente usuários autenticados podem acessar pacientes.
 alter table public.pacientes enable row level security;
 
 drop policy if exists "pacientes_select_autenticado" on public.pacientes;

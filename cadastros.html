@@ -42,6 +42,11 @@
                     <div id="patientMessage" class="form-message" role="alert" aria-live="polite"></div>
 
                     <form id="patientForm" novalidate>
+                        <div class="form-subsection-title">
+                            <span>Dados pessoais</span>
+                            <small>Informações principais do paciente</small>
+                        </div>
+
                         <div class="form-grid">
                             <div class="form-group full">
                                 <label for="nome">Nome completo *</label>
@@ -74,9 +79,39 @@
                             </div>
                         </div>
 
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Contato de emergência</span>
+                            <small>Pessoa que deve ser contatada em caso de necessidade</small>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contatoEmergenciaNome">Nome do contato</label>
+                                <input id="contatoEmergenciaNome" name="contato_emergencia_nome" type="text" placeholder="Nome do contato de emergência">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contatoEmergenciaTelefone">Telefone do contato</label>
+                                <input id="contatoEmergenciaTelefone" name="contato_emergencia_telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999">
+                            </div>
+                        </div>
+
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Arquivos e documentos</span>
+                            <small>Fotos, radiografias e PDFs podem ser enviados junto com o cadastro</small>
+                        </div>
+
+                        <div class="patient-upload-zone" id="patientUploadZone" tabindex="0" role="button" aria-label="Selecionar arquivos do paciente">
+                            <input id="patientFiles" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple hidden>
+                            <div class="upload-icon">↑</div>
+                            <strong>Arraste arquivos para cá ou clique para selecionar</strong>
+                            <span>JPG, PNG, WEBP ou PDF · até 10 MB por arquivo</span>
+                        </div>
+                        <div class="pending-files" id="pendingFiles"></div>
+
                         <div class="form-actions">
                             <button type="button" id="cancelEditButton" class="btn btn-secondary" hidden>Cancelar edição</button>
-                            <button type="reset" class="btn btn-secondary" onclick="setTimeout(() => { if (typeof resetFormMode === 'function') resetFormMode(); }, 0)">Limpar</button>
+                            <button type="reset" class="btn btn-secondary" id="clearPatientButton">Limpar</button>
                             <button type="submit" class="btn btn-primary" id="patientSubmitButton">
                                 <span class="button-text">Salvar paciente</span>
                                 <span class="button-loading">Salvando...</span>
@@ -107,7 +142,7 @@
                                     <th>CPF</th>
                                     <th>Telefone</th>
                                     <th>E-mail</th>
-                                    <th>Endereço</th>
+                                    <th>Contato de emergência</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -126,7 +161,7 @@
     <div class="dialog-content">
         <div class="dialog-icon">!</div>
         <h3>Excluir paciente?</h3>
-        <p>Você está prestes a excluir <strong id="deletePatientName"></strong>. Esta ação removerá o cadastro do banco de dados.</p>
+        <p>Você está prestes a excluir <strong id="deletePatientName"></strong>. Se houver consultas vinculadas, o sistema impedirá a exclusão para preservar o histórico.</p>
         <div class="dialog-actions">
             <button type="button" class="btn btn-secondary" id="cancelDeleteButton">Cancelar</button>
             <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir paciente</button>

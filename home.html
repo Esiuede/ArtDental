@@ -36,14 +36,13 @@
         <div class="main-area">
             <header class="topbar">
                 <div class="topbar-title">Gestão odontológica</div>
-                <div class="topbar-actions"><button class="icon-button" aria-label="Notificações">◌</button></div>
             </header>
 
             <main class="page-content">
                 <section class="page-header">
                     <div>
-                        <h1>Bom dia 👋</h1>
-                        <p>Acompanhe o movimento do consultório e acesse as principais ações.</p>
+                        <h1 id="dashboardGreeting">Olá 👋</h1>
+                        <p id="dashboardDate">Acompanhe o movimento do consultório e acesse as principais ações.</p>
                     </div>
                     <div class="header-actions">
                         <a class="btn btn-secondary" href="cadastros.html">+ Novo paciente</a>
@@ -54,38 +53,35 @@
                 <section class="stats-grid" aria-label="Resumo do consultório">
                     <article class="stat-card">
                         <div class="stat-top"><span class="stat-label">CONSULTAS HOJE</span><span class="stat-icon">▣</span></div>
-                        <div class="stat-value">8</div>
-                        <div class="stat-detail">Agenda prevista para hoje</div>
+                        <div class="stat-value" id="todayAppointmentsCount">—</div>
+                        <div class="stat-detail">Atendimentos ativos na agenda de hoje</div>
                     </article>
                     <article class="stat-card">
                         <div class="stat-top"><span class="stat-label">PRÓXIMA CONSULTA</span><span class="stat-icon">◷</span></div>
-                        <div class="stat-value">10:30</div>
-                        <div class="stat-detail">Ana Souza · Avaliação</div>
+                        <div class="stat-value" id="nextAppointmentTime">—</div>
+                        <div class="stat-detail" id="nextAppointmentDetail">Carregando agenda...</div>
                     </article>
                     <article class="stat-card">
                         <div class="stat-top"><span class="stat-label">PACIENTES</span><span class="stat-icon">♙</span></div>
-                        <div class="stat-value">284</div>
-                        <div class="stat-detail">Total cadastrados</div>
+                        <div class="stat-value" id="totalPatientsCount">—</div>
+                        <div class="stat-detail">Total de pacientes cadastrados</div>
                     </article>
                     <article class="stat-card">
                         <div class="stat-top"><span class="stat-label">NOVOS ESTE MÊS</span><span class="stat-icon">+</span></div>
-                        <div class="stat-value">18</div>
-                        <div class="stat-detail">Cadastros nos últimos 30 dias</div>
+                        <div class="stat-value" id="newPatientsMonthCount">—</div>
+                        <div class="stat-detail">Cadastros realizados no mês atual</div>
                     </article>
                 </section>
 
                 <section class="dashboard-grid">
                     <article class="panel">
                         <div class="panel-header">
-                            <div><h2>Agenda de hoje</h2><p>Próximos atendimentos do consultório</p></div>
+                            <div><h2>Agenda de hoje</h2><p id="todayAgendaSubtitle">Carregando atendimentos do dia...</p></div>
                             <a href="consultas.html" class="btn btn-secondary">Ver agenda</a>
                         </div>
                         <div class="panel-body">
-                            <div class="appointment-list">
-                                <div class="appointment-row"><div class="appointment-time">09:00</div><div><div class="appointment-name">Mariana Alves</div><div class="appointment-type">Consulta</div></div><span class="status status-confirmed">Confirmada</span></div>
-                                <div class="appointment-row"><div class="appointment-time">10:30</div><div><div class="appointment-name">Ana Souza</div><div class="appointment-type">Avaliação</div></div><span class="status status-confirmed">Confirmada</span></div>
-                                <div class="appointment-row"><div class="appointment-time">11:30</div><div><div class="appointment-name">João Silva</div><div class="appointment-type">Retorno</div></div><span class="status status-waiting">Aguardando</span></div>
-                                <div class="appointment-row"><div class="appointment-time">14:00</div><div><div class="appointment-name">Carla Mendes</div><div class="appointment-type">Consulta</div></div><span class="status status-cancelled">Cancelada</span></div>
+                            <div class="appointment-list" id="todayAppointmentList">
+                                <div class="profile-empty">Carregando agenda...</div>
                             </div>
                         </div>
                     </article>
@@ -107,5 +103,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="home.js"></script>
+    <script src="home-dashboard.js?v=03"></script>
 </body>
 </html>

@@ -54,9 +54,9 @@
                 <button class="patient-tab active" type="button" data-tab="dados">Dados</button>
                 <button class="patient-tab" type="button" data-tab="consultas">Consultas</button>
                 <button class="patient-tab" type="button" data-tab="arquivos">Arquivos</button>
-                <button class="patient-tab" type="button" data-tab="anamnese">Anamnese <span class="tab-badge">Em breve</span></button>
+                <button class="patient-tab" type="button" data-tab="anamnese">Anamnese</button>
+                <button class="patient-tab" type="button" data-tab="tratamento">Tratamento</button>
                 <button class="patient-tab" type="button" data-tab="odontograma">Odontograma <span class="tab-badge">Em breve</span></button>
-                <button class="patient-tab" type="button" data-tab="tratamento">Tratamento <span class="tab-badge">Em breve</span></button>
                 <button class="patient-tab" type="button" data-tab="documentos">Documentos <span class="tab-badge">Em breve</span></button>
             </nav>
 
@@ -134,15 +134,57 @@
             </section>
 
             <section class="profile-tab-panel" data-panel="anamnese">
-                <div class="coming-soon-card"><div class="coming-soon-icon">+</div><h2>Anamnese</h2><p>O formulário de histórico clínico será implementado na próxima etapa do prontuário.</p></div>
+                <article class="profile-card">
+                    <div class="profile-card-header">
+                        <div>
+                            <h2>Anamnese</h2>
+                            <p>Histórico de saúde informado para auxiliar o atendimento odontológico</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="openAnamnesisButton">Preencher anamnese</button>
+                    </div>
+                    <div class="profile-card-body" id="anamnesisSummary">
+                        <div class="profile-empty">Carregando anamnese...</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="tratamento">
+                <div class="treatment-layout">
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div>
+                                <h2>Plano de tratamento</h2>
+                                <p>Registre o plano clínico atual. Cada salvamento cria uma nova versão.</p>
+                            </div>
+                        </div>
+                        <div class="profile-card-body">
+                            <div id="treatmentMessage" class="form-message" role="alert" aria-live="polite"></div>
+                            <label class="clinical-field-label" for="treatmentPlanText">Plano proposto</label>
+                            <textarea id="treatmentPlanText" class="clinical-textarea treatment-textarea" maxlength="30000" placeholder="Descreva o plano de tratamento, etapas previstas, observações clínicas e orientações relevantes..."></textarea>
+                            <div class="textarea-footer">
+                                <span id="treatmentLastSaved">Nenhum plano salvo</span>
+                                <span id="treatmentCharCount">0 / 30000</span>
+                            </div>
+                            <div class="form-actions treatment-actions">
+                                <button type="button" class="btn btn-primary" id="saveTreatmentPlanButton">Salvar nova versão</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div><h2>Histórico do plano</h2><p>Versões anteriores preservadas no prontuário</p></div>
+                            <span class="patient-meta" id="treatmentVersionCount">0 versões</span>
+                        </div>
+                        <div class="treatment-history" id="treatmentHistory">
+                            <div class="profile-empty">Carregando histórico...</div>
+                        </div>
+                    </article>
+                </div>
             </section>
 
             <section class="profile-tab-panel" data-panel="odontograma">
                 <div class="coming-soon-card"><div class="coming-soon-icon">⌁</div><h2>Odontograma</h2><p>A representação interativa dos dentes e procedimentos será implementada em uma etapa dedicada.</p></div>
-            </section>
-
-            <section class="profile-tab-panel" data-panel="tratamento">
-                <div class="coming-soon-card"><div class="coming-soon-icon">✓</div><h2>Plano e acompanhamento do tratamento</h2><p>Esta área receberá o plano clínico e o histórico dos procedimentos realizados.</p></div>
             </section>
 
             <section class="profile-tab-panel" data-panel="documentos">
@@ -151,6 +193,64 @@
         </main>
     </div>
 </div>
+
+<dialog class="patient-dialog clinical-dialog" id="anamnesisDialog">
+    <div class="dialog-content clinical-dialog-content">
+        <div class="clinical-dialog-header">
+            <div>
+                <span class="section-label">PRONTUÁRIO CLÍNICO</span>
+                <h3>Anamnese do paciente</h3>
+                <p>Registre as informações relatadas pelo paciente. Este formulário não substitui a avaliação profissional.</p>
+            </div>
+            <button type="button" class="dialog-close-button" id="closeAnamnesisButton" aria-label="Fechar">×</button>
+        </div>
+
+        <form id="anamnesisForm">
+            <div class="anamnesis-grid">
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="hasDiseases"><span>Possui alguma doença ou condição de saúde relevante?</span></label>
+                    <textarea id="diseasesDetails" class="clinical-textarea compact" rows="2" placeholder="Descreva as condições informadas"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="usesMedication"><span>Faz uso contínuo ou recente de medicamentos?</span></label>
+                    <textarea id="medicationDetails" class="clinical-textarea compact" rows="2" placeholder="Informe medicamentos, doses ou observações disponíveis"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="hasAllergies"><span>Possui alergias conhecidas?</span></label>
+                    <textarea id="allergyDetails" class="clinical-textarea compact" rows="2" placeholder="Informe medicamentos, substâncias ou outros agentes"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="surgeryDetails">Cirurgias ou hospitalizações anteriores</label>
+                    <textarea id="surgeryDetails" class="clinical-textarea compact" rows="2" placeholder="Descreva quando relevante"></textarea>
+                </div>
+
+                <div class="anamnesis-checks full">
+                    <label><input type="checkbox" id="hasHypertension"> Hipertensão</label>
+                    <label><input type="checkbox" id="hasDiabetes"> Diabetes</label>
+                    <label><input type="checkbox" id="hasHeartCondition"> Condição cardíaca</label>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="otherConditions">Outras condições ou informações importantes</label>
+                    <textarea id="otherConditions" class="clinical-textarea compact" rows="2" placeholder="Outras informações clínicas relatadas"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="anamnesisNotes">Observações da anamnese</label>
+                    <textarea id="anamnesisNotes" class="clinical-textarea" rows="4" placeholder="Observações complementares"></textarea>
+                </div>
+            </div>
+
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-secondary" id="cancelAnamnesisButton">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="saveAnamnesisButton">Salvar anamnese</button>
+            </div>
+        </form>
+    </div>
+</dialog>
 
 <dialog class="patient-dialog" id="deleteFileDialog">
     <div class="dialog-content">
@@ -167,5 +267,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="home.js"></script>
 <script src="paciente-perfil.js"></script>
+<script src="prontuario-v03.js"></script>
 </body>
 </html>

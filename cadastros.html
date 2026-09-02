@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pacientes.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="./imgs/logo2.png" alt="Art Dental"><span>Art Dental</span></div>
+        <span class="sidebar-section-label">MENU</span>
+        <ul class="nav-list">
+            <li><a class="nav-link" href="home.html"><span class="nav-icon">⌂</span><span>Visão geral</span></a></li>
+            <li><a class="nav-link active" href="cadastros.html"><span class="nav-icon">♙</span><span>Pacientes</span></a></li>
+            <li><a class="nav-link" href="consultas.html"><span class="nav-icon">▣</span><span>Agenda</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-card"><div class="user-name" id="sidebarUser">Usuário</div><div class="user-role">Administrador</div></div>
+            <button class="nav-link logout-btn" type="button" onclick="fazerLogout()"><span class="nav-icon">↪</span><span>Sair</span></button>
+        </div>
+    </aside>
+
+    <div class="main-area">
+        <header class="topbar"><div class="topbar-title">Pacientes</div></header>
+        <main class="page-content">
+            <section class="page-header">
+                <div><h1>Pacientes</h1><p>Cadastre, localize e atualize as informações dos seus pacientes.</p></div>
+            </section>
+
+            <section class="form-section">
+                <div class="form-section-header">
+                    <h2 id="patientFormTitle">Novo paciente</h2>
+                    <p id="patientFormDescription">Preencha os dados principais para criar um novo cadastro.</p>
+                </div>
+                <div class="form-section-body">
+                    <div id="patientMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                    <form id="patientForm" novalidate>
+                        <div class="form-subsection-title">
+                            <span>Dados pessoais</span>
+                            <small>Informações principais do paciente</small>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label for="nome">Nome completo *</label>
+                                <input id="nome" name="nome" type="text" placeholder="Nome do paciente" autocomplete="name" minlength="2" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpf">CPF</label>
+                                <input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nascimento">Data de nascimento</label>
+                                <input id="nascimento" name="nascimento" type="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefone">Telefone *</label>
+                                <input id="telefone" name="telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999" autocomplete="tel" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailPaciente">E-mail</label>
+                                <input id="emailPaciente" name="email" type="email" placeholder="paciente@email.com" autocomplete="email">
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="endereco">Endereço</label>
+                                <input id="endereco" name="endereco" type="text" placeholder="Rua, número, bairro e cidade" autocomplete="street-address">
+                            </div>
+                        </div>
+
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Contato de emergência</span>
+                            <small>Pessoa que deve ser contatada em caso de necessidade</small>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contatoEmergenciaNome">Nome do contato</label>
+                                <input id="contatoEmergenciaNome" name="contato_emergencia_nome" type="text" placeholder="Nome do contato de emergência">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contatoEmergenciaTelefone">Telefone do contato</label>
+                                <input id="contatoEmergenciaTelefone" name="contato_emergencia_telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999">
+                            </div>
+                        </div>
+
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Arquivos e documentos</span>
+                            <small>Fotos, radiografias e PDFs podem ser enviados junto com o cadastro</small>
+                        </div>
+
+                        <div class="patient-upload-zone" id="patientUploadZone" tabindex="0" role="button" aria-label="Selecionar arquivos do paciente">
+                            <input id="patientFiles" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple hidden>
+                            <div class="upload-icon">↑</div>
+                            <strong>Arraste arquivos para cá ou clique para selecionar</strong>
+                            <span>JPG, PNG, WEBP ou PDF · até 10 MB por arquivo</span>
+                        </div>
+                        <div class="pending-files" id="pendingFiles"></div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancelEditButton" class="btn btn-secondary" hidden>Cancelar edição</button>
+                            <button type="reset" class="btn btn-secondary" id="clearPatientButton">Limpar</button>
+                            <button type="submit" class="btn btn-primary" id="patientSubmitButton">
+                                <span class="button-text">Salvar paciente</span>
+                                <span class="button-loading">Salvando...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div><h2>Pacientes cadastrados</h2><p>Dados armazenados no Supabase</p></div>
+                    <span class="patient-meta" id="patientCount">0 pacientes</span>
+                </div>
+                <div class="panel-body">
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span>⌕</span>
+                            <input id="patientSearch" class="search-input" type="search" placeholder="Buscar por nome, CPF, telefone, e-mail ou endereço">
+                        </div>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>CPF</th>
+                                    <th>Telefone</th>
+                                    <th>E-mail</th>
+                                    <th>Contato de emergência</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientTableBody">
+                                <tr><td colspan="6" class="loading-cell">Carregando pacientes...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<dialog class="patient-dialog" id="deleteDialog">
+    <div class="dialog-content">
+        <div class="dialog-icon">!</div>
+        <h3>Excluir paciente?</h3>
+        <p>Você está prestes a excluir <strong id="deletePatientName"></strong>. Se houver consultas vinculadas, o sistema impedirá a exclusão para preservar o histórico.</p>
+        <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary" id="cancelDeleteButton">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Excluir paciente</button>
+        </div>
+    </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="home.js"></script>
+<script src="pacientes.js"></script>
+</body>
+</html>

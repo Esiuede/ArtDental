@@ -3,33 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Art Dental</title>
+    <title>Visão Geral | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-layout">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="user-icon">&#128100;</div>
-            <ul>
-                <li><a href="cadastros.html">Cadastros</a></li>
-                <li><a href="#">Consultas</a></li>
-                <li>
-                    <a href="#" onclick="fazerLogout()" style="background-color: #ff4d4d; color: white; margin-top: 20px; text-align: center;">Sair</a>
-                </li>
-            </ul>
-        </nav>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="./imgs/logo2.png" alt="Art Dental">
+                <span>Art Dental</span>
+            </div>
 
-        <!-- Main Content Area -->
-        <main class="content">
-            <h1>Painel Art Dental</h1>
-            <p>Seja bem-vindo ao sistema de gestão odontológica.</p>
-        </main>
+            <span class="sidebar-section-label">MENU</span>
+            <ul class="nav-list">
+                <li><a class="nav-link active" href="home.html"><span class="nav-icon">⌂</span><span>Visão geral</span></a></li>
+                <li><a class="nav-link" href="cadastros.html"><span class="nav-icon">♙</span><span>Pacientes</span></a></li>
+                <li><a class="nav-link" href="consultas.html"><span class="nav-icon">▣</span><span>Agenda</span></a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-name" id="sidebarUser">Usuário</div>
+                    <div class="user-role">Administrador</div>
+                </div>
+                <button class="nav-link logout-btn" type="button" onclick="fazerLogout()"><span class="nav-icon">↪</span><span>Sair</span></button>
+            </div>
+        </aside>
+
+        <div class="main-area">
+            <header class="topbar">
+                <div class="topbar-title">Gestão odontológica</div>
+            </header>
+
+            <main class="page-content">
+                <section class="page-header">
+                    <div>
+                        <h1 id="dashboardGreeting">Olá 👋</h1>
+                        <p id="dashboardDate">Acompanhe o movimento do consultório e acesse as principais ações.</p>
+                    </div>
+                    <div class="header-actions">
+                        <a class="btn btn-secondary" href="cadastros.html">+ Novo paciente</a>
+                        <a class="btn btn-primary" href="consultas.html">+ Nova consulta</a>
+                    </div>
+                </section>
+
+                <section class="stats-grid" aria-label="Resumo do consultório">
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label">CONSULTAS HOJE</span><span class="stat-icon">▣</span></div>
+                        <div class="stat-value" id="todayAppointmentsCount">—</div>
+                        <div class="stat-detail">Atendimentos ativos na agenda de hoje</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label">PRÓXIMA CONSULTA</span><span class="stat-icon">◷</span></div>
+                        <div class="stat-value" id="nextAppointmentTime">—</div>
+                        <div class="stat-detail" id="nextAppointmentDetail">Carregando agenda...</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label">PACIENTES</span><span class="stat-icon">♙</span></div>
+                        <div class="stat-value" id="totalPatientsCount">—</div>
+                        <div class="stat-detail">Total de pacientes cadastrados</div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-top"><span class="stat-label">NOVOS ESTE MÊS</span><span class="stat-icon">+</span></div>
+                        <div class="stat-value" id="newPatientsMonthCount">—</div>
+                        <div class="stat-detail">Cadastros realizados no mês atual</div>
+                    </article>
+                </section>
+
+                <section class="dashboard-grid">
+                    <article class="panel">
+                        <div class="panel-header">
+                            <div><h2>Agenda de hoje</h2><p id="todayAgendaSubtitle">Carregando atendimentos do dia...</p></div>
+                            <a href="consultas.html" class="btn btn-secondary">Ver agenda</a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="appointment-list" id="todayAppointmentList">
+                                <div class="profile-empty">Carregando agenda...</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="panel">
+                        <div class="panel-header"><div><h2>Ações rápidas</h2><p>Atalhos para tarefas frequentes</p></div></div>
+                        <div class="panel-body">
+                            <div class="quick-actions">
+                                <a href="cadastros.html" class="quick-action"><span class="quick-icon">+</span><div><strong>Novo paciente</strong><small>Cadastrar paciente</small></div></a>
+                                <a href="consultas.html" class="quick-action"><span class="quick-icon">▣</span><div><strong>Nova consulta</strong><small>Adicionar à agenda</small></div></a>
+                                <a href="cadastros.html" class="quick-action"><span class="quick-icon">⌕</span><div><strong>Buscar paciente</strong><small>Localizar cadastro</small></div></a>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </main>
+        </div>
     </div>
 
-    <!-- SDK Oficial do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Script de Validação de Sessão e Logout -->
     <script src="home.js"></script>
+    <script src="home-dashboard.js?v=03"></script>
 </body>
 </html>

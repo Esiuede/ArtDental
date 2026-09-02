@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="agenda.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="./imgs/logo2.png" alt="Art Dental"><span>Art Dental</span></div>
+        <span class="sidebar-section-label">MENU</span>
+        <ul class="nav-list">
+            <li><a class="nav-link" href="home.html"><span class="nav-icon">⌂</span><span>Visão geral</span></a></li>
+            <li><a class="nav-link" href="cadastros.html"><span class="nav-icon">♙</span><span>Pacientes</span></a></li>
+            <li><a class="nav-link active" href="consultas.html"><span class="nav-icon">▣</span><span>Agenda</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-card"><div class="user-name" id="sidebarUser">Usuário</div><div class="user-role">Administrador</div></div>
+            <button class="nav-link logout-btn" type="button" onclick="fazerLogout()"><span class="nav-icon">↪</span><span>Sair</span></button>
+        </div>
+    </aside>
+
+    <div class="main-area">
+        <header class="topbar"><div class="topbar-title">Agenda</div></header>
+
+        <main class="page-content">
+            <section class="page-header">
+                <div>
+                    <h1>Agenda de consultas</h1>
+                    <p>Agende atendimentos vinculados aos pacientes cadastrados e acompanhe a semana.</p>
+                </div>
+            </section>
+
+            <div id="appointmentMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+            <section class="form-section appointment-form-section">
+                <div class="form-section-header">
+                    <h2 id="appointmentFormTitle">Nova consulta</h2>
+                    <p id="appointmentFormDescription">Selecione um paciente cadastrado e informe os dados do atendimento.</p>
+                </div>
+
+                <div class="form-section-body">
+                    <form id="appointmentForm" novalidate>
+                        <div class="form-grid">
+                            <div class="form-group patient-search-wrapper">
+                                <label for="paciente">Paciente</label>
+                                <input id="paciente" type="search" placeholder="Digite nome, CPF ou telefone" autocomplete="off" required>
+                                <input id="pacienteId" type="hidden">
+                                <div id="patientSuggestions" class="patient-suggestions" hidden></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profissional">Profissional</label>
+                                <input id="profissional" type="text" placeholder="Nome do profissional" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="dataConsulta">Data</label>
+                                <input id="dataConsulta" type="date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="horaConsulta">Horário</label>
+                                <input id="horaConsulta" type="time" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tipoConsulta">Tipo</label>
+                                <select id="tipoConsulta">
+                                    <option value="Consulta">Consulta</option>
+                                    <option value="Avaliação">Avaliação</option>
+                                    <option value="Retorno">Retorno</option>
+                                    <option value="Procedimento">Procedimento</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="statusConsulta">Status</label>
+                                <select id="statusConsulta">
+                                    <option value="Agendada">Agendada</option>
+                                    <option value="Confirmada">Confirmada</option>
+                                    <option value="Aguardando confirmação">Aguardando confirmação</option>
+                                    <option value="Finalizada">Finalizada</option>
+                                    <option value="Cancelada">Cancelada</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="observacoes">Observações</label>
+                                <textarea id="observacoes" rows="3" placeholder="Informações relevantes para o atendimento"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button id="cancelAppointmentEdit" type="button" class="btn btn-secondary" hidden>Cancelar edição</button>
+                            <button type="reset" class="btn btn-secondary" onclick="setTimeout(() => document.getElementById('pacienteId').value = '', 0)">Limpar</button>
+                            <button id="appointmentSubmitButton" type="submit" class="btn btn-primary">
+                                <span class="button-text">Agendar consulta</span>
+                                <span class="button-loading">Salvando...</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="calendar-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Agenda semanal</h2>
+                        <p id="weekLabel">Semana atual</p>
+                    </div>
+
+                    <div class="week-navigation">
+                        <button id="previousWeek" class="btn btn-secondary" type="button">‹ Anterior</button>
+                        <button id="todayWeek" class="btn btn-secondary" type="button">Hoje</button>
+                        <button id="nextWeek" class="btn btn-secondary" type="button">Próxima ›</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <div id="calendarHead" class="calendar-head"></div>
+                    <div id="calendarGrid" class="calendar-grid"></div>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Consultas da semana</h2>
+                        <p>Edite, cancele ou exclua os agendamentos exibidos acima.</p>
+                    </div>
+                    <span id="appointmentCount" class="text-muted">0 consultas</span>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Paciente</th>
+                                    <th>Data</th>
+                                    <th>Horário</th>
+                                    <th>Profissional</th>
+                                    <th>Tipo</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentTableBody">
+                                <tr><td colspan="7" class="loading-cell">Carregando consultas...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<dialog id="deleteAppointmentDialog" class="confirm-dialog">
+    <div class="confirm-dialog-content">
+        <div class="confirm-dialog-icon danger">!</div>
+        <h3>Excluir consulta?</h3>
+        <p id="deleteAppointmentInfo">Esta ação removerá o agendamento do banco de dados.</p>
+        <div class="confirm-dialog-actions">
+            <button id="cancelDeleteAppointment" type="button" class="btn btn-secondary">Cancelar</button>
+            <button id="confirmDeleteAppointment" type="button" class="btn btn-danger">Excluir consulta</button>
+        </div>
+    </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="home.js"></script>
+<script src="agenda.js"></script>
+</body>
+</html>

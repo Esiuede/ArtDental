@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do paciente | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="pacientes.css">
+    <link rel="stylesheet" href="agenda.css">
+    <link rel="stylesheet" href="perfil-paciente.css">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="sidebar-brand"><img src="./imgs/logo2.png" alt="Art Dental"><span>Art Dental</span></div>
+        <span class="sidebar-section-label">MENU</span>
+        <ul class="nav-list">
+            <li><a class="nav-link" href="home.html"><span class="nav-icon">⌂</span><span>Visão geral</span></a></li>
+            <li><a class="nav-link active" href="cadastros.html"><span class="nav-icon">♙</span><span>Pacientes</span></a></li>
+            <li><a class="nav-link" href="consultas.html"><span class="nav-icon">▣</span><span>Agenda</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-card"><div class="user-name" id="sidebarUser">Usuário</div><div class="user-role">Administrador</div></div>
+            <button class="nav-link logout-btn" type="button" onclick="fazerLogout()"><span class="nav-icon">↪</span><span>Sair</span></button>
+        </div>
+    </aside>
+
+    <div class="main-area">
+        <header class="topbar">
+            <div class="topbar-title">Perfil do paciente</div>
+            <a href="cadastros.html" class="btn btn-secondary">← Voltar para pacientes</a>
+        </header>
+
+        <main class="page-content profile-page">
+            <div id="profileMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+            <section class="patient-profile-hero" id="patientHero">
+                <div class="profile-avatar" id="patientInitials">--</div>
+                <div class="profile-identity">
+                    <span class="section-label">PRONTUÁRIO DO PACIENTE</span>
+                    <h1 id="patientName">Carregando...</h1>
+                    <div class="profile-summary" id="patientSummary"></div>
+                </div>
+                <div class="profile-hero-actions">
+                    <a href="cadastros.html" class="btn btn-secondary">Editar cadastro</a>
+                    <a href="consultas.html" class="btn btn-primary">Nova consulta</a>
+                </div>
+            </section>
+
+            <nav class="patient-tabs" aria-label="Seções do paciente">
+                <button class="patient-tab active" type="button" data-tab="dados">Dados</button>
+                <button class="patient-tab" type="button" data-tab="consultas">Consultas</button>
+                <button class="patient-tab" type="button" data-tab="arquivos">Arquivos</button>
+                <button class="patient-tab" type="button" data-tab="anamnese">Anamnese</button>
+                <button class="patient-tab" type="button" data-tab="tratamento">Tratamento</button>
+                <button class="patient-tab" type="button" data-tab="odontograma">Odontograma <span class="tab-badge">Em breve</span></button>
+                <button class="patient-tab" type="button" data-tab="documentos">Documentos <span class="tab-badge">Em breve</span></button>
+            </nav>
+
+            <section class="profile-tab-panel active" data-panel="dados">
+                <div class="profile-grid">
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div><h2>Dados pessoais</h2><p>Informações principais do cadastro</p></div>
+                        </div>
+                        <div class="profile-detail-grid">
+                            <div class="profile-detail"><span>Nome completo</span><strong id="detailName">—</strong></div>
+                            <div class="profile-detail"><span>CPF</span><strong id="detailCpf">—</strong></div>
+                            <div class="profile-detail"><span>Data de nascimento</span><strong id="detailBirth">—</strong></div>
+                            <div class="profile-detail"><span>Telefone</span><strong id="detailPhone">—</strong></div>
+                            <div class="profile-detail"><span>E-mail</span><strong id="detailEmail">—</strong></div>
+                            <div class="profile-detail full"><span>Endereço</span><strong id="detailAddress">—</strong></div>
+                        </div>
+                    </article>
+
+                    <article class="profile-card emergency-card">
+                        <div class="profile-card-header">
+                            <div><h2>Contato de emergência</h2><p>Contato para situações de necessidade</p></div>
+                        </div>
+                        <div class="profile-detail-grid single-column">
+                            <div class="profile-detail"><span>Nome do contato</span><strong id="detailEmergencyName">—</strong></div>
+                            <div class="profile-detail"><span>Telefone</span><strong id="detailEmergencyPhone">—</strong></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="consultas">
+                <article class="profile-card">
+                    <div class="profile-card-header">
+                        <div><h2>Histórico de consultas</h2><p>Atendimentos vinculados a este paciente</p></div>
+                        <span class="patient-meta" id="profileAppointmentCount">0 consultas</span>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table profile-table">
+                            <thead><tr><th>Data</th><th>Horário</th><th>Tipo</th><th>Profissional</th><th>Status</th></tr></thead>
+                            <tbody id="profileAppointmentBody"><tr><td colspan="5" class="loading-cell">Carregando consultas...</td></tr></tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="arquivos">
+                <div class="profile-grid files-layout">
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div><h2>Adicionar arquivos</h2><p>Radiografias, fotos, exames e documentos do paciente</p></div>
+                        </div>
+                        <div class="profile-card-body">
+                            <div class="patient-upload-zone" id="profileUploadZone" tabindex="0" role="button">
+                                <input id="profileFiles" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple hidden>
+                                <div class="upload-icon">↑</div>
+                                <strong>Arraste arquivos ou clique para selecionar</strong>
+                                <span>JPG, PNG, WEBP ou PDF · até 10 MB</span>
+                            </div>
+                            <div class="pending-files" id="profilePendingFiles"></div>
+                            <button type="button" class="btn btn-primary btn-full upload-selected-button" id="uploadSelectedButton" disabled>Enviar arquivos selecionados</button>
+                        </div>
+                    </article>
+
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div><h2>Arquivos do paciente</h2><p>Arquivos armazenados de forma privada</p></div>
+                            <span class="patient-meta" id="profileFileCount">0 arquivos</span>
+                        </div>
+                        <div class="profile-files-list" id="profileFilesList">
+                            <div class="loading-cell">Carregando arquivos...</div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="anamnese">
+                <article class="profile-card">
+                    <div class="profile-card-header">
+                        <div>
+                            <h2>Anamnese</h2>
+                            <p>Histórico de saúde informado para auxiliar o atendimento odontológico</p>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="openAnamnesisButton">Preencher anamnese</button>
+                    </div>
+                    <div class="profile-card-body" id="anamnesisSummary">
+                        <div class="profile-empty">Carregando anamnese...</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="tratamento">
+                <div class="treatment-layout">
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div>
+                                <h2>Plano de tratamento</h2>
+                                <p>Registre o plano clínico atual. Cada salvamento cria uma nova versão.</p>
+                            </div>
+                        </div>
+                        <div class="profile-card-body">
+                            <div id="treatmentMessage" class="form-message" role="alert" aria-live="polite"></div>
+                            <label class="clinical-field-label" for="treatmentPlanText">Plano proposto</label>
+                            <textarea id="treatmentPlanText" class="clinical-textarea treatment-textarea" maxlength="30000" placeholder="Descreva o plano de tratamento, etapas previstas, observações clínicas e orientações relevantes..."></textarea>
+                            <div class="textarea-footer">
+                                <span id="treatmentLastSaved">Nenhum plano salvo</span>
+                                <span id="treatmentCharCount">0 / 30000</span>
+                            </div>
+                            <div class="form-actions treatment-actions">
+                                <button type="button" class="btn btn-primary" id="saveTreatmentPlanButton">Salvar nova versão</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="profile-card">
+                        <div class="profile-card-header">
+                            <div><h2>Histórico do plano</h2><p>Versões anteriores preservadas no prontuário</p></div>
+                            <span class="patient-meta" id="treatmentVersionCount">0 versões</span>
+                        </div>
+                        <div class="treatment-history" id="treatmentHistory">
+                            <div class="profile-empty">Carregando histórico...</div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="odontograma">
+                <div class="coming-soon-card"><div class="coming-soon-icon">⌁</div><h2>Odontograma</h2><p>A representação interativa dos dentes e procedimentos será implementada em uma etapa dedicada.</p></div>
+            </section>
+
+            <section class="profile-tab-panel" data-panel="documentos">
+                <div class="coming-soon-card"><div class="coming-soon-icon">□</div><h2>Documentos e termos</h2><p>Os termos assinados serão centralizados aqui em uma versão futura.</p></div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<dialog class="patient-dialog clinical-dialog" id="anamnesisDialog">
+    <div class="dialog-content clinical-dialog-content">
+        <div class="clinical-dialog-header">
+            <div>
+                <span class="section-label">PRONTUÁRIO CLÍNICO</span>
+                <h3>Anamnese do paciente</h3>
+                <p>Registre as informações relatadas pelo paciente. Este formulário não substitui a avaliação profissional.</p>
+            </div>
+            <button type="button" class="dialog-close-button" id="closeAnamnesisButton" aria-label="Fechar">×</button>
+        </div>
+
+        <form id="anamnesisForm">
+            <div class="anamnesis-grid">
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="hasDiseases"><span>Possui alguma doença ou condição de saúde relevante?</span></label>
+                    <textarea id="diseasesDetails" class="clinical-textarea compact" rows="2" placeholder="Descreva as condições informadas"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="usesMedication"><span>Faz uso contínuo ou recente de medicamentos?</span></label>
+                    <textarea id="medicationDetails" class="clinical-textarea compact" rows="2" placeholder="Informe medicamentos, doses ou observações disponíveis"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label class="toggle-question"><input type="checkbox" id="hasAllergies"><span>Possui alergias conhecidas?</span></label>
+                    <textarea id="allergyDetails" class="clinical-textarea compact" rows="2" placeholder="Informe medicamentos, substâncias ou outros agentes"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="surgeryDetails">Cirurgias ou hospitalizações anteriores</label>
+                    <textarea id="surgeryDetails" class="clinical-textarea compact" rows="2" placeholder="Descreva quando relevante"></textarea>
+                </div>
+
+                <div class="anamnesis-checks full">
+                    <label><input type="checkbox" id="hasHypertension"> Hipertensão</label>
+                    <label><input type="checkbox" id="hasDiabetes"> Diabetes</label>
+                    <label><input type="checkbox" id="hasHeartCondition"> Condição cardíaca</label>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="otherConditions">Outras condições ou informações importantes</label>
+                    <textarea id="otherConditions" class="clinical-textarea compact" rows="2" placeholder="Outras informações clínicas relatadas"></textarea>
+                </div>
+
+                <div class="anamnesis-question full">
+                    <label for="anamnesisNotes">Observações da anamnese</label>
+                    <textarea id="anamnesisNotes" class="clinical-textarea" rows="4" placeholder="Observações complementares"></textarea>
+                </div>
+            </div>
+
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-secondary" id="cancelAnamnesisButton">Cancelar</button>
+                <button type="submit" class="btn btn-primary" id="saveAnamnesisButton">Salvar anamnese</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<dialog class="patient-dialog" id="deleteFileDialog">
+    <div class="dialog-content">
+        <div class="dialog-icon">!</div>
+        <h3>Excluir arquivo?</h3>
+        <p>O arquivo <strong id="deleteFileName"></strong> será removido permanentemente do prontuário.</p>
+        <div class="dialog-actions">
+            <button type="button" class="btn btn-secondary" id="cancelDeleteFileButton">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteFileButton">Excluir arquivo</button>
+        </div>
+    </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="home.js"></script>
+<script src="paciente-perfil.js"></script>
+<script src="prontuario-v03.js"></script>
+</body>
+</html>

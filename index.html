@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Art Dental - Gestão inteligente para consultórios odontológicos">
+    <title>Entrar | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+    <main class="login-layout">
+        <section class="login-brand" aria-label="Apresentação Art Dental">
+            <div class="brand-content">
+                <div class="brand-logo brand-logo-light">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+                <span class="brand-eyebrow">GESTÃO ODONTOLÓGICA</span>
+                <h1>Seu consultório organizado em um só lugar.</h1>
+                <p>Centralize pacientes, consultas e rotina administrativa em uma experiência simples e eficiente.</p>
+
+                <div class="brand-features" aria-label="Recursos do sistema">
+                    <div class="brand-feature"><span>✓</span> Gestão simples de pacientes</div>
+                    <div class="brand-feature"><span>✓</span> Agenda organizada e acessível</div>
+                    <div class="brand-feature"><span>✓</span> Informações importantes em poucos cliques</div>
+                </div>
+            </div>
+            <div class="brand-decoration brand-decoration-one"></div>
+            <div class="brand-decoration brand-decoration-two"></div>
+        </section>
+
+        <section class="login-panel">
+            <div class="login-card">
+                <div class="mobile-logo">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+
+                <div class="login-heading">
+                    <span class="section-label">BEM-VINDO</span>
+                    <h2>Entre na sua conta</h2>
+                    <p>Acesse o painel de gestão do seu consultório.</p>
+                </div>
+
+                <div id="loginMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                <form id="loginForm" novalidate>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="nome@consultorio.com" autocomplete="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="senha">Senha</label>
+                        </div>
+                        <div class="password-field">
+                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+                            <button type="button" class="password-toggle" id="togglePassword" aria-label="Mostrar senha">Mostrar</button>
+                        </div>
+                    </div>
+
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Lembrar de mim</span>
+                    </label>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="loginButton">
+                        <span class="button-text">Entrar</span>
+                        <span class="button-loading" aria-hidden="true">Entrando...</span>
+                    </button>
+                </form>
+
+                <p class="login-footer">Art Dental · Sistema de gestão odontológica</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

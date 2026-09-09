@@ -2,9 +2,6 @@ const supabaseUrl = 'https://lsuehxfsfyifxxdtrzxn.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzdWVoeGZzZnlpZnh4ZHRyenhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODU3MzcsImV4cCI6MjA4OTk2MTczN30.B7UbYck3pNaA52lctxDWEH5nn31tq2htR6wWweFbgb4';
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// As paginas internas ficam ocultas ate que o Supabase confirme a sessao.
-// A seguranca dos dados continua sendo garantida pelo Auth + RLS; isto tambem
-// evita que a interface privada pisque na tela antes de um redirecionamento.
 document.documentElement.classList.add('auth-checking');
 
 function liberarInterfaceAutenticada() {
@@ -30,6 +27,24 @@ function carregarModuloOdontograma() {
     document.body.appendChild(script);
 }
 
+function carregarModuloAcompanhamento() {
+    const treatmentPanel = document.querySelector('[data-panel="tratamento"]');
+    if (!treatmentPanel || document.getElementById('acompanhamento-script')) return;
+
+    if (!document.getElementById('acompanhamento-style')) {
+        const stylesheet = document.createElement('link');
+        stylesheet.id = 'acompanhamento-style';
+        stylesheet.rel = 'stylesheet';
+        stylesheet.href = 'acompanhamento.css?v=0.5.0';
+        document.head.appendChild(stylesheet);
+    }
+
+    const script = document.createElement('script');
+    script.id = 'acompanhamento-script';
+    script.src = 'acompanhamento.js?v=0.5.0';
+    document.body.appendChild(script);
+}
+
 async function verificarSessao() {
     try {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
@@ -41,12 +56,12 @@ async function verificarSessao() {
 
         const sidebarUser = document.getElementById('sidebarUser');
         if (sidebarUser) {
-            // textContent evita interpretar o e-mail/nome como HTML.
             sidebarUser.textContent = user.email?.split('@')[0] || 'Usuário';
         }
 
         liberarInterfaceAutenticada();
         carregarModuloOdontograma();
+        carregarModuloAcompanhamento();
         return user;
     } catch (error) {
         console.error('Falha ao validar a sessão:', error);
@@ -70,6 +85,4 @@ async function fazerLogout() {
     }
 }
 
-// Disponibiliza uma Promise única para scripts das páginas que precisem
-// aguardar a autenticação antes de consultar dados sensíveis.
 window.authReady = verificarSessao();

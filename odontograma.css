@@ -1,0 +1,433 @@
+.odontogram-layout {
+    display: grid;
+    gap: 18px;
+}
+
+.odontogram-card {
+    overflow: visible;
+}
+
+.odontogram-card .profile-card-body {
+    padding: 22px;
+}
+
+.odontogram-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.odontogram-toolbar-copy h3 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.odontogram-toolbar-copy p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.odontogram-board {
+    border: 1px solid var(--border);
+    background: #fbfdff;
+    border-radius: 16px;
+    padding: 18px;
+    overflow-x: auto;
+}
+
+.odontogram-arch-block + .odontogram-arch-block {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px dashed #dbe4ee;
+}
+
+.odontogram-arch-title {
+    text-align: center;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.odontogram-arch {
+    min-width: 760px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+}
+
+.odontogram-quadrant {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(48px, 1fr));
+    gap: 7px;
+}
+
+.odontogram-midline {
+    min-height: 96px;
+    display: flex;
+    justify-content: center;
+}
+
+.odontogram-midline::before {
+    content: '';
+    width: 1px;
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.tooth-button {
+    --tooth-color: #ffffff;
+    --tooth-stroke: #94a3b8;
+    position: relative;
+    border: 1px solid transparent;
+    background: transparent;
+    border-radius: 12px;
+    padding: 6px 3px 7px;
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.tooth-button:hover,
+.tooth-button:focus-visible {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.tooth-button.has-record {
+    background: #fff;
+    border-color: #e2e8f0;
+}
+
+.tooth-button.is-selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, .12);
+}
+
+.tooth-number {
+    color: #334155;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.tooth-svg {
+    width: 38px;
+    height: 58px;
+    overflow: visible;
+}
+
+.tooth-svg .tooth-shape {
+    fill: var(--tooth-color);
+    stroke: var(--tooth-stroke);
+    stroke-width: 1.7;
+    vector-effect: non-scaling-stroke;
+    transition: fill .18s ease, stroke .18s ease;
+}
+
+.tooth-state-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--tooth-color);
+    border: 1px solid rgba(15, 23, 42, .18);
+    opacity: 0;
+}
+
+.tooth-button.has-record .tooth-state-dot {
+    opacity: 1;
+}
+
+.tooth-button[data-condition="Saudável"] {
+    --tooth-color: #ffffff;
+    --tooth-stroke: #94a3b8;
+}
+
+.tooth-button[data-condition="Restauração"] {
+    --tooth-color: #3b82f6;
+    --tooth-stroke: #1d4ed8;
+}
+
+.tooth-button[data-condition="Comprometido"] {
+    --tooth-color: #ef4444;
+    --tooth-stroke: #b91c1c;
+}
+
+.tooth-button[data-condition="Tratamento necessário"] {
+    --tooth-color: #f59e0b;
+    --tooth-stroke: #b45309;
+}
+
+.tooth-button[data-condition="Tratamento concluído"] {
+    --tooth-color: #22c55e;
+    --tooth-stroke: #15803d;
+}
+
+.tooth-button[data-condition="Ausente / extraído"] {
+    --tooth-color: #64748b;
+    --tooth-stroke: #334155;
+    opacity: .72;
+}
+
+.tooth-button[data-condition="Endodontia / canal"] {
+    --tooth-color: #a855f7;
+    --tooth-stroke: #7e22ce;
+}
+
+.odontogram-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.odontogram-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 9px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: #fff;
+    color: #475569;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.odontogram-legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+}
+
+.odontogram-note {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.odontogram-history-card .profile-card-body {
+    padding: 0;
+}
+
+.odontogram-history-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.odontogram-history-filter {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 8px 10px;
+    background: #fff;
+    color: #334155;
+    font: inherit;
+    font-size: 11px;
+}
+
+.odontogram-history {
+    display: grid;
+}
+
+.odontogram-history-item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+    padding: 15px 18px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.odontogram-history-item:last-child {
+    border-bottom: 0;
+}
+
+.odontogram-history-tooth {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: #eff6ff;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.odontogram-history-main strong {
+    display: block;
+    color: #334155;
+    font-size: 12px;
+}
+
+.odontogram-history-main span,
+.odontogram-history-date {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.odontogram-history-note {
+    margin-top: 7px;
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.odontogram-dialog {
+    width: min(94vw, 620px);
+}
+
+.odontogram-dialog-content {
+    padding: 0;
+}
+
+.odontogram-dialog-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.odontogram-dialog-header h3 {
+    font-size: 19px;
+    margin-top: 4px;
+}
+
+.odontogram-dialog-header p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.odontogram-current-state {
+    margin: 18px 22px 0;
+    padding: 12px 14px;
+    border-radius: 11px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.odontogram-current-state strong {
+    color: #0f172a;
+}
+
+.odontogram-form {
+    padding: 18px 22px 22px;
+}
+
+.odontogram-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.odontogram-field {
+    display: grid;
+    gap: 6px;
+}
+
+.odontogram-field.full {
+    grid-column: 1 / -1;
+}
+
+.odontogram-field label {
+    color: #334155;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.odontogram-field select,
+.odontogram-field textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    color: #0f172a;
+    font: inherit;
+    font-size: 12px;
+    padding: 10px 11px;
+}
+
+.odontogram-field textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.55;
+}
+
+.odontogram-field select:focus,
+.odontogram-field textarea:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .09);
+}
+
+.odontogram-tooth-history {
+    margin-top: 18px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+}
+
+.odontogram-tooth-history h4 {
+    color: #334155;
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.odontogram-tooth-history-list {
+    max-height: 160px;
+    overflow-y: auto;
+    display: grid;
+    gap: 7px;
+}
+
+.odontogram-tooth-history-row {
+    padding: 8px 10px;
+    border-radius: 9px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+@media (max-width: 760px) {
+    .odontogram-board {
+        padding: 14px 10px;
+    }
+
+    .odontogram-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .odontogram-field.full {
+        grid-column: auto;
+    }
+
+    .odontogram-history-item {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .odontogram-history-date {
+        grid-column: 2;
+        margin-top: 0;
+    }
+}

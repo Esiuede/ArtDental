@@ -34,50 +34,107 @@
                 <div><h1>Pacientes</h1><p>Cadastre, localize e atualize as informações dos seus pacientes.</p></div>
             </section>
 
-            <section class="patient-layout">
-                <div class="panel patient-form-panel">
-                    <div class="panel-header">
-                        <div><h2 id="patientFormTitle">Novo paciente</h2><p id="patientFormDescription">Preencha os dados abaixo para criar um novo cadastro.</p></div>
-                    </div>
+            <section class="form-section">
+                <div class="form-section-header">
+                    <h2 id="patientFormTitle">Novo paciente</h2>
+                    <p id="patientFormDescription">Preencha os dados principais para criar um novo cadastro.</p>
+                </div>
+                <div class="form-section-body">
+                    <div id="patientMessage" class="form-message" role="alert" aria-live="polite"></div>
+
                     <form id="patientForm" novalidate>
+                        <div class="form-subsection-title">
+                            <span>Dados pessoais</span>
+                            <small>Informações principais do paciente</small>
+                        </div>
+
                         <div class="form-grid">
-                            <div class="field field-full"><label for="nome">Nome completo *</label><input type="text" id="nome" maxlength="120" autocomplete="name" required></div>
-                            <div class="field"><label for="cpf">CPF *</label><input type="text" id="cpf" inputmode="numeric" maxlength="14" required></div>
-                            <div class="field"><label for="nascimento">Data de nascimento *</label><input type="date" id="nascimento" required></div>
-                            <div class="field"><label for="telefone">Telefone *</label><input type="tel" id="telefone" inputmode="numeric" maxlength="15" autocomplete="tel" required></div>
-                            <div class="field"><label for="emailPaciente">E-mail *</label><input type="email" id="emailPaciente" maxlength="160" autocomplete="email" required></div>
-                            <div class="field field-full"><label for="endereco">Endereço *</label><input type="text" id="endereco" maxlength="240" autocomplete="street-address" required></div>
+                            <div class="form-group full">
+                                <label for="nome">Nome completo *</label>
+                                <input id="nome" name="nome" type="text" placeholder="Nome do paciente" autocomplete="name" minlength="2" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cpf">CPF</label>
+                                <input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" placeholder="000.000.000-00">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nascimento">Data de nascimento</label>
+                                <input id="nascimento" name="nascimento" type="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefone">Telefone *</label>
+                                <input id="telefone" name="telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999" autocomplete="tel" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailPaciente">E-mail</label>
+                                <input id="emailPaciente" name="email" type="email" placeholder="paciente@email.com" autocomplete="email">
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="endereco">Endereço</label>
+                                <input id="endereco" name="endereco" type="text" placeholder="Rua, número, bairro e cidade" autocomplete="street-address">
+                            </div>
                         </div>
 
-                        <div class="form-section-divider"><span>Contato de emergência</span></div>
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Contato de emergência</span>
+                            <small>Pessoa que deve ser contatada em caso de necessidade</small>
+                        </div>
+
                         <div class="form-grid">
-                            <div class="field"><label for="contatoEmergenciaNome">Nome do contato</label><input type="text" id="contatoEmergenciaNome" maxlength="120"></div>
-                            <div class="field"><label for="contatoEmergenciaTelefone">Telefone do contato</label><input type="tel" id="contatoEmergenciaTelefone" inputmode="numeric" maxlength="15"></div>
+                            <div class="form-group">
+                                <label for="contatoEmergenciaNome">Nome do contato</label>
+                                <input id="contatoEmergenciaNome" name="contato_emergencia_nome" type="text" placeholder="Nome do contato de emergência">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contatoEmergenciaTelefone">Telefone do contato</label>
+                                <input id="contatoEmergenciaTelefone" name="contato_emergencia_telefone" type="tel" inputmode="tel" maxlength="15" placeholder="(81) 99999-9999">
+                            </div>
                         </div>
 
-                        <div class="form-section-divider"><span>Arquivos do paciente</span></div>
-                        <div class="upload-zone" id="patientUploadZone" tabindex="0" role="button" aria-label="Selecionar arquivos do paciente">
-                            <input type="file" id="patientFiles" accept="image/jpeg,image/png,image/webp,application/pdf" multiple hidden>
-                            <div class="upload-icon">⇧</div>
-                            <strong>Arraste arquivos aqui ou clique para selecionar</strong>
-                            <span>JPG, PNG, WEBP ou PDF · máximo de 10 MB por arquivo</span>
+                        <div class="form-subsection-title form-subsection-spaced">
+                            <span>Arquivos e documentos</span>
+                            <small>Fotos, radiografias e PDFs podem ser enviados junto com o cadastro</small>
                         </div>
-                        <div id="pendingFiles" class="pending-files" aria-live="polite"></div>
 
-                        <div id="patientMessage" class="form-message" role="status" aria-live="polite"></div>
+                        <div class="patient-upload-zone" id="patientUploadZone" tabindex="0" role="button" aria-label="Selecionar arquivos do paciente">
+                            <input id="patientFiles" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" multiple hidden>
+                            <div class="upload-icon">↑</div>
+                            <strong>Arraste arquivos para cá ou clique para selecionar</strong>
+                            <span>JPG, PNG, WEBP ou PDF · até 10 MB por arquivo</span>
+                        </div>
+                        <div class="pending-files" id="pendingFiles"></div>
+
                         <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" id="clearPatientButton">Limpar</button>
-                            <button type="button" class="btn btn-secondary" id="cancelEditButton" hidden>Cancelar edição</button>
-                            <button type="submit" class="btn btn-primary" id="patientSubmitButton">Cadastrar paciente</button>
+                            <button type="button" id="cancelEditButton" class="btn btn-secondary" hidden>Cancelar edição</button>
+                            <button type="reset" class="btn btn-secondary" id="clearPatientButton">Limpar</button>
+                            <button type="submit" class="btn btn-primary" id="patientSubmitButton">
+                                <span class="button-text">Salvar paciente</span>
+                                <span class="button-loading">Salvando...</span>
+                            </button>
                         </div>
                     </form>
                 </div>
+            </section>
 
-                <div class="panel patient-list-panel">
-                    <div class="panel-header list-header">
-                        <div><h2>Pacientes cadastrados</h2><p><span id="patientCount">0</span> paciente(s) encontrado(s)</p></div>
-                        <div class="search-box"><label class="sr-only" for="patientSearch">Buscar paciente</label><input type="search" id="patientSearch" placeholder="Buscar por nome, CPF ou telefone"></div>
+            <section class="panel">
+                <div class="panel-header">
+                    <div><h2>Pacientes cadastrados</h2><p>Dados armazenados no Supabase</p></div>
+                    <span class="patient-meta" id="patientCount">0 pacientes</span>
+                </div>
+                <div class="panel-body">
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <span>⌕</span>
+                            <input id="patientSearch" class="search-input" type="search" placeholder="Buscar por nome, CPF, telefone, e-mail ou endereço">
+                        </div>
                     </div>
+
                     <div class="table-wrap">
                         <table class="data-table">
                             <thead>
@@ -85,7 +142,7 @@
                                     <th>Paciente</th>
                                     <th>CPF</th>
                                     <th>Telefone</th>
-                                    <th>Nascimento</th>
+                                    <th>E-mail</th>
                                     <th>Contato de emergência</th>
                                     <th>Ações</th>
                                 </tr>

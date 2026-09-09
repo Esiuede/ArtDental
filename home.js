@@ -12,6 +12,24 @@ function liberarInterfaceAutenticada() {
     document.documentElement.classList.add('auth-ok');
 }
 
+function carregarModuloOdontograma() {
+    const odontogramPanel = document.querySelector('[data-panel="odontograma"]');
+    if (!odontogramPanel || document.getElementById('odontograma-script')) return;
+
+    if (!document.getElementById('odontograma-style')) {
+        const stylesheet = document.createElement('link');
+        stylesheet.id = 'odontograma-style';
+        stylesheet.rel = 'stylesheet';
+        stylesheet.href = 'odontograma.css?v=0.4.0';
+        document.head.appendChild(stylesheet);
+    }
+
+    const script = document.createElement('script');
+    script.id = 'odontograma-script';
+    script.src = 'odontograma.js?v=0.4.0';
+    document.body.appendChild(script);
+}
+
 async function verificarSessao() {
     try {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
@@ -28,6 +46,7 @@ async function verificarSessao() {
         }
 
         liberarInterfaceAutenticada();
+        carregarModuloOdontograma();
         return user;
     } catch (error) {
         console.error('Falha ao validar a sessão:', error);

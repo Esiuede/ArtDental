@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Definição de nova senha do Art Dental">
+    <title>Definir nova senha | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css?v=0.7.0">
+</head>
+<body class="login-page">
+    <main class="login-layout">
+        <section class="login-brand" aria-label="Apresentação Art Dental">
+            <div class="brand-content">
+                <div class="brand-logo brand-logo-light">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+                <span class="brand-eyebrow">SEGURANÇA DA CONTA</span>
+                <h1 id="passwordBrandTitle">Proteja seu acesso ao Art Dental.</h1>
+                <p id="passwordBrandText">Defina uma senha pessoal para manter o acesso ao consultório protegido.</p>
+            </div>
+            <div class="brand-decoration brand-decoration-one"></div>
+            <div class="brand-decoration brand-decoration-two"></div>
+        </section>
+
+        <section class="login-panel">
+            <div class="login-card">
+                <div class="mobile-logo">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+
+                <div class="login-heading">
+                    <span class="section-label" id="passwordSectionLabel">NOVA SENHA</span>
+                    <h2 id="passwordPageTitle">Defina sua nova senha</h2>
+                    <p id="passwordPageDescription">Escolha uma senha que será usada nos próximos acessos.</p>
+                </div>
+
+                <div id="passwordMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                <div id="firstAccessNote" class="auth-note auth-hidden">
+                    <strong>Primeiro acesso</strong>
+                    Por segurança, a senha temporária precisa ser substituída antes de liberar o sistema.
+                </div>
+
+                <form id="passwordForm" class="auth-hidden" novalidate>
+                    <div class="form-group">
+                        <label for="newPassword">Nova senha</label>
+                        <div class="password-field">
+                            <input type="password" id="newPassword" name="newPassword" placeholder="Digite a nova senha" autocomplete="new-password" minlength="8" required>
+                            <button type="button" class="password-toggle" data-password-toggle="newPassword" aria-label="Mostrar senha">Mostrar</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirme a nova senha</label>
+                        <div class="password-field">
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Digite novamente" autocomplete="new-password" minlength="8" required>
+                            <button type="button" class="password-toggle" data-password-toggle="confirmPassword" aria-label="Mostrar senha">Mostrar</button>
+                        </div>
+                    </div>
+
+                    <p class="password-rules">Use pelo menos 8 caracteres. Evite senhas fáceis de adivinhar ou reutilizadas em outros serviços.</p>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="passwordButton">
+                        <span class="button-text">Salvar nova senha</span>
+                        <span class="button-loading" aria-hidden="true">Salvando...</span>
+                    </button>
+                </form>
+
+                <div id="invalidRecovery" class="auth-status-card">
+                    <h3>Link inválido ou expirado</h3>
+                    <p>Solicite um novo e-mail de recuperação para continuar.</p>
+                    <div class="auth-actions-row">
+                        <a class="btn btn-primary btn-full" href="recuperar-senha.html">Solicitar novo link</a>
+                    </div>
+                </div>
+
+                <div class="auth-actions-row" id="passwordBackRow">
+                    <a class="auth-back-link" href="index.html">← Voltar para o login</a>
+                </div>
+
+                <p class="login-footer">Art Dental · Sistema de gestão odontológica</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth-client.js?v=0.7.0"></script>
+    <script src="redefinir-senha.js?v=0.7.0"></script>
+</body>
+</html>

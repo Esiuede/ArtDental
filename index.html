@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css?v=0.7.0">
 </head>
 <body class="login-page">
     <main class="login-layout">
@@ -54,6 +55,7 @@
                     <div class="form-group">
                         <div class="label-row">
                             <label for="senha">Senha</label>
+                            <a class="auth-inline-link" href="recuperar-senha.html">Esqueci minha senha</a>
                         </div>
                         <div class="password-field">
                             <input type="password" id="senha" name="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
@@ -78,6 +80,7 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
+    <script src="auth-client.js?v=0.7.0"></script>
+    <script src="script.js?v=0.7.0"></script>
 </body>
 </html>

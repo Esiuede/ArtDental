@@ -1,6 +1,4 @@
-const supabaseUrl = 'https://lsuehxfsfyifxxdtrzxn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzdWVoeGZzZnlpZnh4ZHRyenhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODU3MzcsImV4cCI6MjA4OTk2MTczN30.B7UbYck3pNaA52lctxDWEH5nn31tq2htR6wWweFbgb4';
-const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.artDentalSupabase;
 
 const loginForm = document.getElementById('loginForm');
 const loginButton = document.getElementById('loginButton');
@@ -21,6 +19,19 @@ function clearMessage() {
 function setLoading(isLoading) {
     loginButton.disabled = isLoading;
     loginButton.classList.toggle('is-loading', isLoading);
+}
+
+async function getAccessState(userId) {
+    return supabaseClient
+        .from('usuarios_acesso')
+        .select('deve_trocar_senha')
+        .eq('usuario_id', userId)
+        .maybeSingle();
+}
+
+const initialParams = new URLSearchParams(window.location.search);
+if (initialParams.get('erro') === 'acesso') {
+    showMessage('Não foi possível validar o perfil de acesso. Entre novamente ou contate o responsável pelo sistema.');
 }
 
 togglePassword.addEventListener('click', () => {
@@ -45,19 +56,34 @@ loginForm.addEventListener('submit', async (event) => {
     setLoading(true);
 
     try {
-        const { error } = await supabaseClient.auth.signInWithPassword({
+        const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
             email,
             password: senha
         });
 
-        if (error) {
+        if (signInError || !signInData?.user) {
             showMessage('Não foi possível entrar. Verifique seu e-mail e sua senha.');
-            console.error(error);
+            console.error(signInError);
+            return;
+        }
+
+        const { data: access, error: accessError } = await getAccessState(signInData.user.id);
+
+        if (accessError || !access) {
+            console.error('Não foi possível validar o controle de acesso:', accessError);
+            await supabaseClient.auth.signOut();
+            showMessage('Sua conta entrou, mas o perfil de acesso não pôde ser validado. Tente novamente.');
+            return;
+        }
+
+        if (access.deve_trocar_senha) {
+            showMessage('Primeiro acesso identificado. Vamos criar sua senha pessoal...', 'success');
+            window.location.replace('redefinir-senha.html?modo=primeiro-acesso');
             return;
         }
 
         showMessage('Login realizado com sucesso. Redirecionando...', 'success');
-        window.location.href = 'home.html';
+        window.location.replace('home.html');
     } catch (err) {
         showMessage('Ocorreu um erro inesperado. Tente novamente.');
         console.error(err);

@@ -67,6 +67,25 @@ function carregarModuloDocumentos() {
     document.body.appendChild(script);
 }
 
+function adicionarLinkRedefinirSenha() {
+    const footer = document.querySelector('.sidebar-footer');
+    const logoutButton = footer?.querySelector('.logout-btn');
+
+    if (!footer || document.getElementById('resetPasswordNavLink')) return;
+
+    const link = document.createElement('a');
+    link.id = 'resetPasswordNavLink';
+    link.className = 'nav-link';
+    link.href = 'recuperar-senha.html';
+    link.innerHTML = '<span class="nav-icon">⌘</span><span>Redefinir senha</span>';
+
+    if (logoutButton) {
+        footer.insertBefore(link, logoutButton);
+    } else {
+        footer.appendChild(link);
+    }
+}
+
 async function validarPrimeiroAcesso(userId) {
     const { data: access, error } = await supabaseClient
         .from('usuarios_acesso')
@@ -106,6 +125,7 @@ async function verificarSessao() {
             sidebarUser.textContent = user.email?.split('@')[0] || 'Usuário';
         }
 
+        adicionarLinkRedefinirSenha();
         liberarInterfaceAutenticada();
         carregarModuloOdontograma();
         carregarModuloAcompanhamento();

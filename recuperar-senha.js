@@ -22,7 +22,7 @@ function setLoading(isLoading) {
 }
 
 function getResetRedirectUrl() {
-    return new URL('redefinir-senha.html?modo=recuperacao', window.location.href).href;
+    return new URL('redefinir-senha.html', window.location.href).href;
 }
 
 recoveryForm.addEventListener('submit', async (event) => {

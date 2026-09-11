@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Recuperação de senha do Art Dental">
+    <title>Recuperar senha | Art Dental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css?v=0.7.0">
+</head>
+<body class="login-page">
+    <main class="login-layout">
+        <section class="login-brand" aria-label="Apresentação Art Dental">
+            <div class="brand-content">
+                <div class="brand-logo brand-logo-light">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+                <span class="brand-eyebrow">ACESSO SEGURO</span>
+                <h1>Recupere sua conta com segurança.</h1>
+                <p>Informe o e-mail cadastrado e enviaremos um link temporário para você definir uma nova senha.</p>
+            </div>
+            <div class="brand-decoration brand-decoration-one"></div>
+            <div class="brand-decoration brand-decoration-two"></div>
+        </section>
+
+        <section class="login-panel">
+            <div class="login-card">
+                <div class="mobile-logo">
+                    <img src="./imgs/logo2.png" alt="Art Dental">
+                </div>
+
+                <div class="login-heading">
+                    <span class="section-label">RECUPERAÇÃO DE SENHA</span>
+                    <h2>Esqueceu sua senha?</h2>
+                    <p>Digite o e-mail usado para acessar o Art Dental.</p>
+                </div>
+
+                <div id="recoveryMessage" class="form-message" role="alert" aria-live="polite"></div>
+
+                <form id="recoveryForm" novalidate>
+                    <div class="form-group">
+                        <label for="recoveryEmail">E-mail</label>
+                        <input type="email" id="recoveryEmail" name="email" placeholder="nome@consultorio.com" autocomplete="email" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-full" id="recoveryButton">
+                        <span class="button-text">Enviar link de recuperação</span>
+                        <span class="button-loading" aria-hidden="true">Enviando...</span>
+                    </button>
+                </form>
+
+                <div id="recoverySuccess" class="auth-status-card" aria-live="polite">
+                    <h3>Confira seu e-mail</h3>
+                    <p>Se houver uma conta vinculada ao endereço informado, você receberá um link para definir uma nova senha.</p>
+                </div>
+
+                <div class="auth-actions-row">
+                    <a class="auth-back-link" href="index.html">← Voltar para o login</a>
+                </div>
+
+                <p class="login-footer">Art Dental · Sistema de gestão odontológica</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="recuperar-senha.js?v=0.7.0"></script>
+</body>
+</html>

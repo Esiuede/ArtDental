@@ -45,6 +45,24 @@ function carregarModuloAcompanhamento() {
     document.body.appendChild(script);
 }
 
+function carregarModuloDocumentos() {
+    const documentsPanel = document.querySelector('[data-panel="documentos"]');
+    if (!documentsPanel || document.getElementById('documentos-script')) return;
+
+    if (!document.getElementById('documentos-style')) {
+        const stylesheet = document.createElement('link');
+        stylesheet.id = 'documentos-style';
+        stylesheet.rel = 'stylesheet';
+        stylesheet.href = 'documentos.css?v=0.6.0';
+        document.head.appendChild(stylesheet);
+    }
+
+    const script = document.createElement('script');
+    script.id = 'documentos-script';
+    script.src = 'documentos.js?v=0.6.0';
+    document.body.appendChild(script);
+}
+
 async function verificarSessao() {
     try {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
@@ -62,6 +80,7 @@ async function verificarSessao() {
         liberarInterfaceAutenticada();
         carregarModuloOdontograma();
         carregarModuloAcompanhamento();
+        carregarModuloDocumentos();
         return user;
     } catch (error) {
         console.error('Falha ao validar a sessão:', error);

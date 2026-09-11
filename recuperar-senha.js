@@ -1,6 +1,4 @@
-const supabaseUrl = 'https://lsuehxfsfyifxxdtrzxn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSwicmVmIjoibHN1ZWh4ZnNmeWlmeHhkdHJ6eG4iLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc3NDM4NTczNywiZXhwIjoyMDg5OTYxNzM3fQ.B7UbYck3pNaA52lctxDWEH5nn31tq2htR6wWweFbgb4';
-const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseClient = window.artDentalSupabase;
 
 const recoveryForm = document.getElementById('recoveryForm');
 const recoveryEmail = document.getElementById('recoveryEmail');

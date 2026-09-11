@@ -1,5 +1,9 @@
 const supabaseUrl = 'https://lsuehxfsfyifxxdtrzxn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzdWVoeGZzZnlpZnh4ZHRyenhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODU3MzcsImV4cCI6MjA4OTk2MTczN30.B7UbYck3pNaA52lctxDWEH5nn31tq2htR6wWweFbgb4';
+const supabaseKey = [
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.',
+    'eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzdWVoeGZzZnlpZnh4ZHRyenhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODU3MzcsImV4cCI6MjA4OTk2MTczN30.',
+    'B7UbYck3pNaA52lctxDWEH5nn31tq2htR6wWweFbgb4'
+].join('');
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 document.documentElement.classList.add('auth-checking');
@@ -63,6 +67,28 @@ function carregarModuloDocumentos() {
     document.body.appendChild(script);
 }
 
+async function validarPrimeiroAcesso(userId) {
+    const { data: access, error } = await supabaseClient
+        .from('usuarios_acesso')
+        .select('deve_trocar_senha')
+        .eq('usuario_id', userId)
+        .maybeSingle();
+
+    if (error || !access) {
+        console.error('Falha ao validar controle de primeiro acesso:', error);
+        await supabaseClient.auth.signOut();
+        window.location.replace('index.html?erro=acesso');
+        return false;
+    }
+
+    if (access.deve_trocar_senha) {
+        window.location.replace('redefinir-senha.html?modo=primeiro-acesso');
+        return false;
+    }
+
+    return true;
+}
+
 async function verificarSessao() {
     try {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
@@ -71,6 +97,9 @@ async function verificarSessao() {
             window.location.replace('index.html');
             return null;
         }
+
+        const accessReleased = await validarPrimeiroAcesso(user.id);
+        if (!accessReleased) return null;
 
         const sidebarUser = document.getElementById('sidebarUser');
         if (sidebarUser) {
